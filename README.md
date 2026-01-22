@@ -1,6 +1,6 @@
 # Re:lax
 
-**_because you forgot to stop ~_**
+<i><b>because you forgot to stop ~</b></i>
 
 We built **Re:lax** because the "one more minute" lie is the enemy of your well-being. When the screen fades, it’s not a lockout—it’s a sanctuary.
 
