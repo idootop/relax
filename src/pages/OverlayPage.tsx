@@ -20,18 +20,20 @@ export const OverlayPage = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const imageURL =
-    'https://i.dell.com/sites/csimages/App-Merchandizing_esupport_flatcontent_global_Images/all/bluescreen.png';
-
   return (
     <div className="fixed inset-0 flex select-none items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0 bg-black">
-        <div
-          className="absolute inset-0 bg-center bg-cover transition-transform duration-[10000ms] ease-linear"
-          style={{
-            backgroundImage: `url(${settings.backgroundImage || imageURL})`,
-          }}
-        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={settings.backgroundImage || '/bluescreen.png'}
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'block',
+              objectFit: 'cover',
+            }}
+          />
+        </div>
       </div>
 
       <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
@@ -47,9 +49,9 @@ export const OverlayPage = () => {
 
       <div className="relative z-10 w-full px-12 text-center text-white">
         <h1
-          className="font-light text-5xl leading-snug tracking-widest md:text-8xl"
+          className="select-none font-normal text-5xl leading-snug tracking-widest md:text-8xl"
           style={{
-            textShadow: '0 4px 12px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.3)',
+            textShadow: '0 10px 30px rgba(0,0,0,0.5)',
           }}
         >
           {settings.breakMessage}

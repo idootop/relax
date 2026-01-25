@@ -9,6 +9,7 @@ import {
   RotateCcw,
   SkipForward,
   Type,
+  X,
 } from 'lucide-react';
 import { useStore } from 'zenbox';
 
@@ -175,14 +176,41 @@ export const HomePage = () => {
             个性化
           </h3>
           <section className="rounded-2xl border border-[#D2D2D7]/30 bg-white/80 shadow-sm">
-            <div className="flex cursor-pointer items-center justify-between px-6 py-4 transition-colors hover:bg-black/[0.01]">
+            <div
+              className="flex cursor-pointer items-center justify-between px-6 py-4 transition-colors hover:bg-black/[0.01]"
+              onClick={() => SettingStore.value.pickImage()}
+            >
               <div className="flex items-center gap-3">
                 <ImageIcon className="text-[#86868B]" size={18} />
                 <span className="text-[15px]">背景图片</span>
               </div>
-              <div className="flex items-center gap-1">
-                <span className="text-[#86868B] text-sm">默认</span>
-                <ChevronRight className="text-[#C7C7CC]" size={16} />
+              <div className="flex items-center gap-3">
+                {settings.backgroundImage ? (
+                  <div className="group relative flex items-center">
+                    {/* 缩略图预览 */}
+                    <div
+                      className="h-10 w-16 rounded-md border border-black/5 bg-center bg-cover shadow-sm"
+                      style={{
+                        backgroundImage: `url(${settings.backgroundImage})`,
+                      }}
+                    />
+                    {/* 删除按钮 */}
+                    <button
+                      className="ml-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-50 text-red-500 transition-colors hover:bg-red-500 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        SettingStore.setState({ backgroundImage: '' });
+                      }}
+                    >
+                      <X size={14} strokeWidth={3} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <span className="text-[#86868B] text-sm">选择</span>
+                    <ChevronRight className="text-[#C7C7CC]" size={16} />
+                  </div>
+                )}
               </div>
             </div>
 
