@@ -15,7 +15,7 @@ export function useAutoStart() {
       } else {
         await disable();
       }
-      setAutoStart(open);
+      _setAutoStart(await isEnabled());
     } catch (e) {
       console.error(e);
     }

@@ -1,6 +1,8 @@
 import { emit, listen } from '@tauri-apps/api/event';
+import { useState } from 'react';
 
 import { SettingStore } from '../store';
+import { useListen } from './event';
 import { Overlay } from './overlay';
 
 export type TimerMode = 'idle' | 'focus' | 'break';
@@ -8,7 +10,19 @@ export type TimerMode = 'idle' | 'focus' | 'break';
 export interface TimerState {
   mode: TimerMode;
   paused: boolean;
-  remaining: number; // milliseconds
+  timeLeft: number; // milliseconds
+}
+
+export function useTimerState() {
+  const [state, setState] = useState<TimerState>({
+    mode: 'idle',
+    paused: false,
+    timeLeft: 0,
+  });
+  useListen<TimerState>('timer-update', (s) => {
+    setState(s);
+  });
+  return state;
 }
 
 /**
@@ -17,7 +31,7 @@ export interface TimerState {
 class TimerController {
   private mode: TimerMode = 'idle';
   private paused = false;
-  private remaining = 0;
+  private timeLeft = 0;
 
   private timerId: number | null = null;
   private lastTick: number = 0;
@@ -27,17 +41,13 @@ class TimerController {
    */
   async init() {
     listen('timer-next', () => this.handleNext());
-    listen('timer-start', () => this.handleStart());
-    listen('timer-stop', () => this.handleStop());
+    listen('timer-reset', () => this.handleReset());
     listen('timer-pause', () => this.handlePause());
     listen('timer-resume', () => this.handleResume());
     listen('settings-update', () => this.handleReset());
 
     // 初始启动：默认进入 focus 模式
-    this.mode = 'focus';
-    this.resetDuration();
-    await this.syncUI();
-    this.startTicker();
+    this.handleStart();
   }
 
   // --- 外部调用接口 (Emitters) ---
@@ -45,11 +55,8 @@ class TimerController {
   next() {
     emit('timer-next');
   }
-  start() {
-    emit('timer-start');
-  }
-  stop() {
-    emit('timer-stop');
+  reset() {
+    emit('timer-reset');
   }
   pause() {
     emit('timer-pause');
@@ -61,7 +68,7 @@ class TimerController {
   // --- 内部逻辑处理 ---
 
   private async handleStart() {
-    this.mode = 'break';
+    this.mode = 'focus';
     this.resetDuration();
     this.paused = false;
     await this.syncUI();
@@ -75,15 +82,6 @@ class TimerController {
     this.paused = false;
     await this.syncUI();
     this.startTicker();
-  }
-
-  private async handleStop() {
-    this.mode = 'idle';
-    this.remaining = 0;
-    this.paused = false;
-    this.stopTicker();
-    await this.syncUI();
-    this.broadcast();
   }
 
   private async handlePause() {
@@ -110,7 +108,7 @@ class TimerController {
 
   private resetDuration() {
     const settings = SettingStore.refresh();
-    this.remaining =
+    this.timeLeft =
       this.mode === 'focus' ? settings.focusDuration : settings.breakDuration;
   }
 
@@ -126,7 +124,7 @@ class TimerController {
     return emit('timer-update', {
       mode: this.mode,
       paused: this.paused,
-      remaining: Math.max(0, this.remaining),
+      timeLeft: Math.max(0, this.timeLeft),
     });
   }
 
@@ -138,10 +136,10 @@ class TimerController {
       if (this.paused || this.mode === 'idle') return;
 
       const now = Date.now();
-      this.remaining -= now - this.lastTick;
+      this.timeLeft -= now - this.lastTick;
       this.lastTick = now;
 
-      if (this.remaining <= 0) {
+      if (this.timeLeft <= 0) {
         this.handleNext();
         return;
       }

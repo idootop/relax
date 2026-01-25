@@ -44,9 +44,9 @@ export function withLocalStorage<T extends State>(
 
 const store = createStore({
   // 专注时长
-  focusDuration: 25 * kOneMinute,
+  focusDuration: 45 * kOneMinute,
   // 休息时长
-  breakDuration: 5 * kOneMinute,
+  breakDuration: 15 * kOneMinute,
   // 提示语
   breakMessage: '休息一下，马上回来',
   // 背景图片

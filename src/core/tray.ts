@@ -1,10 +1,31 @@
 import { Image } from '@tauri-apps/api/image';
 import { Menu, MenuItem, type MenuItemOptions } from '@tauri-apps/api/menu';
 import { TrayIcon } from '@tauri-apps/api/tray';
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { exit } from '@tauri-apps/plugin-process';
 
 import { getWebviewWindow } from '@/core/window';
 
+async function openMainWindow() {
+  let mainWin = await getWebviewWindow('main');
+  if (!mainWin) {
+    mainWin = new WebviewWindow('main', {
+      title: 'Re:Lax',
+      width: 420,
+      height: 680,
+      center: true,
+      resizable: false,
+      skipTaskbar: false,
+      url: 'index.html#',
+    });
+    await new Promise((resolve) => {
+      mainWin!.once('tauri://created', resolve);
+    });
+  }
+
+  await mainWin.show();
+  await mainWin.setFocus();
+}
 class _Tray {
   trayId = 'tray-main';
 
@@ -12,13 +33,7 @@ class _Tray {
     {
       id: 'home',
       text: '设置',
-      action: async () => {
-        const mainWin = await getWebviewWindow('main');
-        if (mainWin) {
-          await mainWin.show();
-          await mainWin.setFocus();
-        }
-      },
+      action: openMainWindow,
     },
     {
       id: 'quit',
@@ -43,17 +58,12 @@ class _Tray {
       }),
       showMenuOnLeftClick: false,
       action: async (event) => {
-        // 点击托盘图标显示窗口
         if (
           event.type === 'Click' &&
           event.button === 'Left' &&
           event.buttonState === 'Up'
         ) {
-          const mainWin = await getWebviewWindow('main');
-          if (mainWin) {
-            await mainWin.show();
-            await mainWin.setFocus();
-          }
+          await openMainWindow();
         }
       },
     });

@@ -5,12 +5,12 @@ import { Timer, type TimerState } from '@/core/timer';
 import { SettingStore } from '@/store';
 
 export const OverlayPage = () => {
-  const [remaining, setRemaining] = useState(0);
+  const [timeLeft, setRemaining] = useState(0);
 
   const settings = useMemo(() => SettingStore.refresh(), []);
 
   useListen<TimerState>('timer-update', (timer) => {
-    setRemaining(timer.remaining);
+    setRemaining(timer.timeLeft);
   });
 
   const formatTime = (ms) => {
@@ -41,7 +41,7 @@ export const OverlayPage = () => {
             textShadow: '0 10px 30px rgba(0,0,0,0.5)',
           }}
         >
-          {formatTime(remaining)}
+          {formatTime(timeLeft)}
         </span>
       </div>
 
@@ -57,7 +57,7 @@ export const OverlayPage = () => {
       </div>
 
       <button
-        className="absolute right-12 bottom-12 text-white"
+        className="absolute right-12 bottom-12 cursor-pointer text-white"
         onClick={() => Timer.next()}
       >
         Skip
