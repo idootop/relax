@@ -16,6 +16,8 @@ pub async fn create_overlay_window(
             .skip_taskbar(true)
             .shadow(false)
             .focused(false)
+            .closable(false)
+            .resizable(false)
             .always_on_top(true);
 
     let window = builder

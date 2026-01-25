@@ -16,8 +16,8 @@ function App() {
     <HashRouter>
       <Routes>
         <Route element={<HomePage />} path="/" />
-        <Route element={<div />} key="background" path="/background" />,
-        <Route element={<OverlayPage />} key="overlay" path="/overlay" />,
+        <Route element={<div />} key="background" path="/background" />
+        <Route element={<OverlayPage />} key="overlay" path="/overlay" />
       </Routes>
     </HashRouter>
   );

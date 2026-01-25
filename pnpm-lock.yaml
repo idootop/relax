@@ -8,9 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@del-wang/utils':
+        specifier: ^1.5.0
+        version: 1.5.0(@types/node@25.0.10)
       '@tauri-apps/api':
         specifier: ^2.9.1
         version: 2.9.1
+      '@tauri-apps/plugin-autostart':
+        specifier: ~2
+        version: 2.5.1
+      '@tauri-apps/plugin-dialog':
+        specifier: ^2.6.0
+        version: 2.6.0
       '@tauri-apps/plugin-process':
         specifier: ^2.3.1
         version: 2.3.1
@@ -26,6 +35,9 @@ importers:
       react-router-dom:
         specifier: ^7.13.0
         version: 7.13.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      zenbox:
+        specifier: ^2.2.0
+        version: 2.2.0(react@19.2.3)
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.3.12
@@ -203,6 +215,19 @@ packages:
     resolution: {integrity: sha512-nAlSOUkVWePrh2/mM1ZVq96CPZI9+Av47caYD7kRJqzwh8CBQU1bTbU1JPMNp9m30ldSq2/BiX0O7FzNceADUw==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@del-wang/equals@1.2.0':
+    resolution: {integrity: sha512-YV6bqV7Pbm0/eEaYb0R+/Co1gUqNx+yqH49HE1JU7lBNCWvAoRdkbXi5XCHVLEKbDzvl82PuWce7PFled+bDgw==}
+    engines: {node: '>=18'}
+
+  '@del-wang/utils@1.5.0':
+    resolution: {integrity: sha512-F9Gk8HLS04WbrrO87h/zNTk6k663J94dkeBG2+bXcM+fKQXg0qYXchX2m0n/mSeEQlPcqZIquDt5+y0dcXm9Ow==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
 
   '@esbuild/aix-ppc64@0.27.2':
     resolution: {integrity: sha512-GZMB+a0mOMZs4MpDbj8RJp4cw+w1WV5NYD6xzgvzUJ5Ek2jerwfO2eADyI6ExDSUED+1X8aMbegahsJi+8mgpw==}
@@ -653,6 +678,12 @@ packages:
     engines: {node: '>= 10'}
     hasBin: true
 
+  '@tauri-apps/plugin-autostart@2.5.1':
+    resolution: {integrity: sha512-zS/xx7yzveCcotkA+8TqkI2lysmG2wvQXv2HGAVExITmnFfHAdj1arGsbbfs3o6EktRHf6l34pJxc3YGG2mg7w==}
+
+  '@tauri-apps/plugin-dialog@2.6.0':
+    resolution: {integrity: sha512-q4Uq3eY87TdcYzXACiYSPhmpBA76shgmQswGkSVio4C82Sz2W4iehe9TnKYwbq7weHiL88Yw19XZm7v28+Micg==}
+
   '@tauri-apps/plugin-process@2.3.1':
     resolution: {integrity: sha512-nCa4fGVaDL/B9ai03VyPOjfAHRHSBz5v6F/ObsB73r/dA3MHHhZtldaDMIc0V/pnUw9ehzr2iEG+XkSEyC0JJA==}
 
@@ -759,6 +790,9 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  immer@11.1.3:
+    resolution: {integrity: sha512-6jQTc5z0KJFtr1UgFpIL3N9XSC3saRaI9PwWtzM2pSqkNGtiNkYY2OSwkOGDK2XcTRcLb1pi/aNkKZz0nxVH4Q==}
 
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
@@ -997,6 +1031,11 @@ packages:
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
 
+  zenbox@2.2.0:
+    resolution: {integrity: sha512-oL4kWSn3E0LUMe8BkyCjL3kjKEhLW4YG6Vh0KjJbCNWoLxAU3RZ+EfYqEAfPHhaUq64/46MkuYcsG/lEzMM8eA==}
+    peerDependencies:
+      react: '>=16.8.0'
+
 snapshots:
 
   '@babel/code-frame@7.27.1':
@@ -1147,6 +1186,12 @@ snapshots:
     optional: true
 
   '@del-wang/config@1.5.0': {}
+
+  '@del-wang/equals@1.2.0': {}
+
+  '@del-wang/utils@1.5.0(@types/node@25.0.10)':
+    optionalDependencies:
+      '@types/node': 25.0.10
 
   '@esbuild/aix-ppc64@0.27.2':
     optional: true
@@ -1430,6 +1475,14 @@ snapshots:
       '@tauri-apps/cli-win32-ia32-msvc': 2.9.6
       '@tauri-apps/cli-win32-x64-msvc': 2.9.6
 
+  '@tauri-apps/plugin-autostart@2.5.1':
+    dependencies:
+      '@tauri-apps/api': 2.9.1
+
+  '@tauri-apps/plugin-dialog@2.6.0':
+    dependencies:
+      '@tauri-apps/api': 2.9.1
+
   '@tauri-apps/plugin-process@2.3.1':
     dependencies:
       '@tauri-apps/api': 2.9.1
@@ -1553,6 +1606,8 @@ snapshots:
   gensync@1.0.0-beta.2: {}
 
   graceful-fs@4.2.11: {}
+
+  immer@11.1.3: {}
 
   jiti@2.6.1: {}
 
@@ -1732,3 +1787,9 @@ snapshots:
       lightningcss: 1.30.2
 
   yallist@3.1.1: {}
+
+  zenbox@2.2.0(react@19.2.3):
+    dependencies:
+      '@del-wang/equals': 1.2.0
+      immer: 11.1.3
+      react: 19.2.3

@@ -6,11 +6,12 @@ pub fn create_background_window(app: &tauri::AppHandle) -> Result<(), String> {
         tauri::WebviewUrl::App("index.html#/background".into()),
     )
     .title("background")
-    .inner_size(0.0, 0.0)
+    .inner_size(1.0, 1.0)
     .position(0.0, 0.0)
     .decorations(false)
     .skip_taskbar(true)
     .shadow(false)
+    .closable(false)
     .resizable(false)
     .always_on_bottom(true)
     .build()
