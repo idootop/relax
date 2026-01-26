@@ -19,14 +19,23 @@ jobs:
       matrix:
         include:
           - platform: "macos-latest"
-            args: "--target universal-apple-darwin"
+            args: "--target universal-apple-darwin --installer dmg"
           - platform: "windows-latest"
-            args: "--target x86_64-pc-windows-msvc"
+            args: "--target x86_64-pc-windows-msvc --installer nsis"
 
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Extract version number
+        id: version
+        shell: pwsh
+        run: |
+          $tagName = "${{ github.ref_name }}"
+          $version = $tagName -replace '^v', ''
+          Write-Output "version=$version" >> $env:GITHUB_OUTPUT
+          Write-Host "Extracted version: $version"
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -48,26 +57,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: ${{ github.ref_name }}
+          releaseName: Re:Lax ${{ github.ref_name }}
           releaseBody: |
-            ## Re:Lax ${{ github.ref_name }}
-
-            Because you forgot to stop ~
+            <strong>because you forgot to stop ~</strong>
 
             ### 📦 Download
 
-            - **macOS**: `ReLax-${{ github.ref_name }}.dmg`
-            - **Windows**: `ReLax-${{ github.ref_name }}.exe`
+            - **macOS**: [ReLax-${{ github.ref_name }}.dmg](https://github.com/idootop/relax/releases/download/${{ github.ref_name }}/ReLax_${{ steps.version.outputs.version }}_universal.dmg)
+            - **Windows**: [ReLax-${{ github.ref_name }}.exe](https://github.com/idootop/relax/releases/download/${{ github.ref_name }}/ReLax_${{ steps.version.outputs.version }}_x64-setup.exe)
 
-            ---
-
-            ### 💡 Tips for macOS Users
-
-            If you see the **"App is damaged"** error message, please run the following command in your Terminal:
-
-            ```bash
-            xattr -cr "/Applications/ReLax.app"
-            ```
+            > [!TIP]
+            > For macOS users: If you see the "App is damaged" error, run this command in Terminal:
+            > ```bash
+            > xattr -cr "/Applications/ReLax.app"
+            > ```
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
