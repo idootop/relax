@@ -76,6 +76,6 @@ jobs:
             > ```bash
             > xattr -cr "/Applications/ReLax.app"
             > ```
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
