@@ -19,9 +19,9 @@ jobs:
       matrix:
         include:
           - platform: "macos-latest"
-            args: "--target universal-apple-darwin --installer dmg"
+            args: "--target universal-apple-darwin --bundles dmg"
           - platform: "windows-latest"
-            args: "--target x86_64-pc-windows-msvc --installer nsis"
+            args: "--target x86_64-pc-windows-msvc --bundles nsis"
 
     runs-on: ${{ matrix.platform }}
     steps:
