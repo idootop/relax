@@ -1,6 +1,7 @@
 // 创建全局隐藏窗口，用来做一些后台任务，如初始化应用等
 pub fn create_background_window(app: &tauri::AppHandle) -> Result<(), String> {
-    let win = tauri::WebviewWindowBuilder::new(
+    #[allow(unused)]
+    let mut builder = tauri::WebviewWindowBuilder::new(
         app,
         "background",
         tauri::WebviewUrl::App("index.html#/background".into()),
@@ -13,11 +14,15 @@ pub fn create_background_window(app: &tauri::AppHandle) -> Result<(), String> {
     .shadow(false)
     .closable(false)
     .resizable(false)
-    .always_on_bottom(true)
-    .build()
-    .map_err(|e| e.to_string())?;
+    .always_on_bottom(true);
 
-    // 在 Windows 上窗口大小做不到 0，所以隐藏掉鼠标事件
+    #[cfg(target_os = "windows")]
+    {
+        builder = builder.visible(false);
+    }
+
+    let win = builder.build().map_err(|e| e.to_string())?;
+
     win.set_ignore_cursor_events(true)
         .map_err(|e| e.to_string())?;
 

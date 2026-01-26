@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 
 import { useListen } from '@/core/event';
 import { Timer, type TimerState } from '@/core/timer';
+import { kIsMac } from '@/core/utils';
 import { SettingStore } from '@/store';
 
 export const OverlayPage = () => {
@@ -38,7 +39,9 @@ export const OverlayPage = () => {
 
       <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
         <span
-          className="font-thin text-[36vw] text-white tabular-nums leading-none tracking-tighter opacity-[0.25] transition-all duration-[2000ms] ease-out"
+          className={`font-thin text-[36vw] text-white tabular-nums leading-none tracking-tighter opacity-[0.25] ${
+            kIsMac ? '' : 'font-mono'
+          }`}
           style={{
             textShadow: '0 10px 30px rgba(0,0,0,0.5)',
           }}

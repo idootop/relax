@@ -32,7 +32,7 @@ class _Tray {
   menu: MenuItemOptions[] = [
     {
       id: 'home',
-      text: '设置',
+      text: '首页',
       action: openMainWindow,
     },
     {
