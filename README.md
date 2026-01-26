@@ -26,6 +26,8 @@ We built **Re:lax** for the deep thinkers, the late-night coders, and the digita
 
 **Get Re:lax → [macOS & Windows](https://github.com/idootop/relax/releases)**
 
+![demo](demo.webp)
+
 ## License
 
 MIT License © 2026-PRESENT [Del Wang](https://github.com/idootop)
