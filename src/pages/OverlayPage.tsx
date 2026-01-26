@@ -58,12 +58,14 @@ export const OverlayPage = () => {
         </h1>
       </div>
 
-      <button
-        className="absolute right-12 bottom-12 cursor-pointer text-white"
-        onClick={() => Timer.next()}
-      >
-        Skip
-      </button>
+      {import.meta.env.DEV && (
+        <button
+          className="absolute right-12 bottom-12 cursor-pointer text-white"
+          onClick={() => Timer.next()}
+        >
+          Skip
+        </button>
+      )}
     </div>
   );
 };

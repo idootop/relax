@@ -49,6 +49,7 @@ class _Tray {
       id: this.trayId,
       tooltip: 'Re:Lax',
       icon: await this.getImage('/tray-icon.png'),
+      iconAsTemplate: true,
       menu: await Menu.new({
         items: await Promise.all(
           this.menu.map(async (item) => {

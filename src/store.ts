@@ -52,7 +52,7 @@ const store = createStore({
   // 休息时长
   breakDuration: 15 * kOneMinute,
   // 提示语
-  breakMessage: '',
+  breakMessage: 'Re:Lax',
   // 背景图片
   backgroundImage: '',
   // 选择图片
