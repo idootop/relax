@@ -48,9 +48,9 @@ export function withLocalStorage<T extends State>(
 
 const store = createStore({
   // 专注时长
-  focusDuration: 45 * kOneMinute,
+  focusDuration: 30 * kOneMinute,
   // 休息时长
-  breakDuration: 15 * kOneMinute,
+  breakDuration: 3 * kOneMinute,
   // 提示语
   breakMessage: 'Re:Lax',
   // 背景图片
